@@ -34,28 +34,30 @@ echo "${slug}: testing..."
 # Run the tests for the provided implementation file and redirect stdout and
 # stderr to capture it
 test_output=$(prove ${solution_dir}/${slug}-test.ys 2>&1)
+rc=$?
 
 # Write the results.json file based on the exit code of the command that was 
 # just executed that tested the implementation file
-if [ $? -eq 0 ]; then
+sanitized_test_output=$(printf "${test_output}" | sed '/wallclock/d')
+if [ $rc -eq 0 ]; then
     jq -n '{version: 1, status: "pass"}' > ${results_file}
-elif [ $? -eq 255 ]; then
-    sanitized_test_output=$(printf "${test_output}" | sed '/wallclock/d')
-    jq -n --arg output "${sanitized_test_output}" '{version: 1, status: "error", message: $output}' > ${results_file}
 else
-    sanitized_test_output=$(printf "${test_output}" | sed '/wallclock/d')
-    jq -n --arg output "${sanitized_test_output}" '{version: 1, status: "fail", message: $output}' > ${results_file}
-    # OPTIONAL: Sanitize the output
-    # In some cases, the test output might be overly verbose, in which case stripping
-    # the unneeded information can be very helpful to the student
-    # sanitized_test_output=$(printf "${test_output}" | sed -n '/Test results:/,$p')
+    if (echo "$sanitized_test_output" | grep -q '^  Failed tests: '); then
+        jq -n --arg output "${sanitized_test_output}" '{version: 1, status: "fail", message: $output}' > ${results_file}
+        # OPTIONAL: Sanitize the output
+        # In some cases, the test output might be overly verbose, in which case stripping
+        # the unneeded information can be very helpful to the student
+        # sanitized_test_output=$(printf "${test_output}" | sed -n '/Test results:/,$p')
 
-    # OPTIONAL: Manually add colors to the output to help scanning the output for errors
-    # If the test output does not contain colors to help identify failing (or passing)
-    # tests, it can be helpful to manually add colors to the output
-    # colorized_test_output=$(echo "${test_output}" \
-    #      | GREP_COLOR='01;31' grep --color=always -E -e '^(ERROR:.*|.*failed)$|$' \
-    #      | GREP_COLOR='01;32' grep --color=always -E -e '^.*passed$|$')
+        # OPTIONAL: Manually add colors to the output to help scanning the output for errors
+        # If the test output does not contain colors to help identify failing (or passing)
+        # tests, it can be helpful to manually add colors to the output
+        # colorized_test_output=$(echo "${test_output}" \
+        #      | GREP_COLOR='01;31' grep --color=always -E -e '^(ERROR:.*|.*failed)$|$' \
+        #      | GREP_COLOR='01;32' grep --color=always -E -e '^.*passed$|$')
+    else
+        jq -n --arg output "${sanitized_test_output}" '{version: 1, status: "error", message: $output}' > ${results_file}
+    fi
 fi
 
 echo "${slug}: done"
