@@ -1,5 +1,5 @@
 {
   "version": 1,
   "status": "fail",
-  "message": "TODO: replace with correct output"
+  "message": "/opt/test-runner/tests/partial-fail/leap-test.ys .. \nFailed 3/9 subtests \n\nTest Summary Report\n-------------------\n/opt/test-runner/tests/partial-fail/leap-test.ys (Wstat: 0 Tests: 9 Failed: 3)\n  Failed tests:  5-6, 9\nResult: FAIL"
 }
