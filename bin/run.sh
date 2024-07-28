@@ -36,19 +36,19 @@ echo "${slug}: testing..."
 
 # Run the tests for the provided implementation file and redirect stdout and
 # stderr to capture it:
-test_output=$(prove ${solution_dir}/${slug}-test.ys 2>&1)
+test_output=$(prove "$solution_dir/$slug-test.ys" 2>&1)
 rc=$?
 
 # Write the results.json file based on the exit code of the command that was
 # just executed that tested the implementation file:
-sanitized_test_output=$(printf "${test_output}" | sed '/wallclock/d')
+sanitized_test_output=$(printf '%s' "$test_output" | sed '/wallclock/d')
 if [ $rc -eq 0 ]; then
-    jq -n '{version: 1, status: "pass"}' > ${results_file}
+    jq -n '{version: 1, status: "pass"}' > "$results_file"
 else
     if (echo "$sanitized_test_output" | grep -q '^  Failed tests: '); then
         jq -n --arg output "${sanitized_test_output}" \
            '{version: 1, status: "fail", message: $output}' \
-           > ${results_file}
+           > "$results_file"
         # OPTIONAL: Sanitize the output
         # In some cases, the test output might be overly verbose, in which case
         # stripping the unneeded information can be very helpful to the student
@@ -64,7 +64,7 @@ else
         #   GREP_COLOR='01;32' grep --color=always -E -e '^.*passed$|$')
     else
         jq -n --arg output "${sanitized_test_output}" \
-          '{version: 1, status: "error", message: $output}' > ${results_file}
+          '{version: 1, status: "error", message: $output}' > "$results_file"
     fi
 fi
 
