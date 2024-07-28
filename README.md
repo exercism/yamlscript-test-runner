@@ -69,6 +69,14 @@ state, you'll need to update the affected
 `tests/<test-name>/expected_results.json` file(s).
 
 
+## Testing repository integrity
+
+This repository has a Makefile for testing / linting various things.
+
+You should run the `make test` command and ensure it finishes cleanly before
+pushing commits.
+
+
 [test-runners]: https://github.com/exercism/docs/tree/main/building/tooling/test-runners
 [golden]: https://ro-che.info/articles/2017-12-04-golden-tests
 [exercism]: https://exercism.io
