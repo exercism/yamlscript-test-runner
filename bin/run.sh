@@ -36,8 +36,10 @@ echo "$slug: testing..."
 
 # Run the tests for the provided implementation file and redirect stdout and
 # stderr to capture it:
-test_output=$(prove "$solution_dir/$slug-test.ys" 2>&1)
+cd "$solution_dir"
+test_output=$(make test 2>&1)
 rc=$?
+cd -
 
 # Write the results.json file based on the exit code of the command that was
 # just executed that tested the implementation file:
