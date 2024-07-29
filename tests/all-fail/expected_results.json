@@ -1,0 +1,5 @@
+{
+  "version": 1,
+  "status": "fail",
+  "message": "/opt/test-runner/tests/all-fail/leap-test.ys .. \nFailed 9/9 subtests \n\nTest Summary Report\n-------------------\n/opt/test-runner/tests/all-fail/leap-test.ys (Wstat: 0 Tests: 9 Failed: 9)\n  Failed tests:  1-9\nResult: FAIL"
+}
