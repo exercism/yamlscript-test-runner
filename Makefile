@@ -17,6 +17,11 @@ SHELLCHECK_TAR := $(SHELLCHECK_DIR).linux.x86_64.tar.xz
 SHELLCHECK_RELEASE := \
   $(SHELLCHECK_RELEASES)/$(SHELLCHECK_VERSION)/$(SHELLCHECK_TAR)
 
+DOCKER_USER := ingy
+DOCKER_VERSION := 0.0.1
+DOCKER_NAME := exercism-$(shell basename $(ROOT))
+DOCKER_IMAGE := $(DOCKER_USER)/$(DOCKER_NAME):$(DOCKER_VERSION)
+
 
 default:
 
@@ -47,3 +52,9 @@ $(SHELLCHECK_DIR): $(SHELLCHECK_TAR)
 
 $(SHELLCHECK_TAR):
 	wget $(SHELLCHECK_RELEASE)
+
+docker-build:
+	docker build --tag=$(DOCKER_IMAGE) .
+
+docker-push: docker-build
+	docker push $(DOCKER_IMAGE)

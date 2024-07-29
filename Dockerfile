@@ -19,8 +19,15 @@ RUN apt-get update \
         xz-utils \
  && true
 
+# Install a specific version of shellcheck:
+RUN wget --quiet https://github.com/koalaman/shellcheck/releases/download/v0.10.0/shellcheck-v0.10.0.linux.x86_64.tar.xz \
+ && tar xf shellcheck-v0.10.0.linux.x86_64.tar.xz \
+ && mv shellcheck-v0.10.0/shellcheck /usr/local/bin/shellcheck \
+ && rm -fr shellcheck-* \
+ && true
+
 # Install /usr/local/bin/ys (the YAMLScript interpreter binary):
-RUN curl https://yamlscript.org/install | BIN=1 bash
+RUN curl -s https://yamlscript.org/install | BIN=1 VERSION=0.1.68 bash
 
 WORKDIR /opt/test-runner
 
