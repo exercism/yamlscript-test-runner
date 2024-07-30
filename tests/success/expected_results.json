@@ -1,4 +1,5 @@
 {
   "version": 1,
-  "status": "pass"
+  "status": "pass",
+  "message": "test/test-1.ys .. \nok 1 - Year not divisible by 4 in common year\nok 2 - Year divisible by 2, not divisible by 4 in common year\nok 3 - Year divisible by 4, not divisible by 100 in leap year\nok 4 - Year divisible by 4 and 5 is still a leap year\nok 5 - Year divisible by 100, not divisible by 400 in common year\nok 6 - Year divisible by 100 but not by 3 is still not a leap year\nok 7 - Year divisible by 400 is leap year\nok 8 - Year divisible by 400 but not by 125 is still a leap year\nok 9 - Year divisible by 200, not divisible by 400 in common year\n1..9\nok\nAll tests successful."
 }

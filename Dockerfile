@@ -27,7 +27,7 @@ RUN wget --quiet https://github.com/koalaman/shellcheck/releases/download/v0.10.
  && true
 
 # Install /usr/local/bin/ys (the YAMLScript interpreter binary):
-RUN curl -s https://yamlscript.org/install | BIN=1 VERSION=0.1.68 bash
+RUN curl -s https://yamlscript.org/install | BIN=1 bash
 
 WORKDIR /opt/test-runner
 
