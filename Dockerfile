@@ -15,12 +15,11 @@ RUN apt-get update \
         jq \
         make \
         perl \
-        wget \
         xz-utils \
  && true
 
 # Install a specific version of shellcheck:
-RUN wget --quiet https://github.com/koalaman/shellcheck/releases/download/v0.10.0/shellcheck-v0.10.0.linux.x86_64.tar.xz \
+RUN curl -sSOL https://github.com/koalaman/shellcheck/releases/download/v0.10.0/shellcheck-v0.10.0.linux.x86_64.tar.xz \
  && tar xf shellcheck-v0.10.0.linux.x86_64.tar.xz \
  && mv shellcheck-v0.10.0/shellcheck /usr/local/bin/shellcheck \
  && rm -fr shellcheck-* \

@@ -51,7 +51,7 @@ $(SHELLCHECK_DIR): $(SHELLCHECK_TAR)
 	tar xf $<
 
 $(SHELLCHECK_TAR):
-	wget $(SHELLCHECK_RELEASE)
+	curl -sSOL $(SHELLCHECK_RELEASE)
 
 docker-build:
 	docker build --tag=$(DOCKER_IMAGE) .
