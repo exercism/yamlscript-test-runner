@@ -1,5 +1,5 @@
 {
   "version": 1,
-  "status": "fail",
-  "message": "TODO: replace with correct output"
+  "status": "error",
+  "message": "Error: Could not resolve symbol: is-leap-year\n  in file 'EVAL' line 1 column 1\n\ntest/test-1.ys .. \nDubious, test returned 1 (wstat 256, 0x100)\nNo subtests run \nTest Summary Report\n-------------------\ntest/test-1.ys (Wstat: 256 (exited 1) Tests: 0 Failed: 0)\n  Non-zero exit status: 1"
 }

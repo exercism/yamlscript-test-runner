@@ -1,0 +1,4 @@
+!yamlscript/v0
+
+defn is-leap-year(year):
+  zero?: year % 4

@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+main() (
+  dir=${1:?Directory argument required}
+
+  out=$(
+    (make --no-print-directory -C "$dir" test 2>&1 || true) |
+      tail -n+2 |
+      perl -p0e 's/\nmake.*: \*\*\*.*//s' |
+      perl -pe 's/^/  /'
+  )
+
+  orig=$dir/expected_results.json
+  [[ -s $orig ]] ||
+    die "No '$orig' found"
+
+  read -r -d '' yaml <<... || true
+$(ys -Y "$orig" | head -n2)
+message: |-
+$out
+...
+
+  ys -l - <<<"$yaml" | jq | cat
+)
+
+die() (
+  echo "$*" >&2
+  exit 1
+)
+
+main "$@"

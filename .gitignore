@@ -1,1 +1,2 @@
+/bin/shellcheck
 /tests/**/*/results.json

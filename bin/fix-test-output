@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+main() (
+  text=$(
+    grep -v '^$'
+  )
+
+  echo "$text" |
+  (
+    if [[ $text == *'All tests successful'* ]]; then
+      grep -B999 'All tests successful'
+    else
+      grep -B999 -A3 'Test Summary Report'
+    fi
+  )
+)
+
+main "$@"

@@ -1,5 +1,5 @@
 {
   "version": 1,
   "status": "error",
-  "message": "TODO: replace with correct output"
+  "message": "Error: Wrong number of args (1) passed to: sci.impl.fns/fun/arity-0--5026\n\ntest/test-1.ys .. \nDubious, test returned 1 (wstat 256, 0x100)\nNo subtests run \nTest Summary Report\n-------------------\ntest/test-1.ys (Wstat: 256 (exited 1) Tests: 0 Failed: 0)\n  Non-zero exit status: 1"
 }
