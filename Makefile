@@ -7,6 +7,9 @@ SHELLCHECK := $(BIN)/shellcheck
 
 export PATH := $(BIN):$(PATH)
 
+EXPECTED_RESULTS_FILES := \
+  $(shell find . -name expected_results.json)
+
 SHELL_FILES := $(shell find . -name '*.sh')
 
 SHELLCHECK_VERSION := v0.10.0
@@ -27,11 +30,16 @@ default:
 
 test: test-shellcheck
 
+update: $(EXPECTED_RESULTS_FILES)
+
 clean:
 	$(RM) -r shellcheck*
 
 realclean: clean
 	$(RM) $(SHELLCHECK)
+
+tests/%/expected_results.json: tests/%
+	$(MAKE) -C $< $(@:$</%=%)
 
 test-shellcheck: $(SHELLCHECK)
 	@echo '*** Testing shell files pass shellcheck'
