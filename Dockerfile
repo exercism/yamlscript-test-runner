@@ -7,6 +7,8 @@
 
 FROM ubuntu:24.04
 
+ARG VERSION 0.1.70
+
 # Install packages required to run the tests:
 RUN apt-get update \
  && apt-get install -y apt-utils \
@@ -26,7 +28,7 @@ RUN curl -sSOL https://github.com/koalaman/shellcheck/releases/download/v0.10.0/
  && true
 
 # Install /usr/local/bin/ys (the YAMLScript interpreter binary):
-RUN curl -s https://yamlscript.org/install | BIN=1 bash
+RUN curl -s https://yamlscript.org/install | BIN=1 VERSION=$(VERSION) bash
 
 WORKDIR /opt/test-runner
 
