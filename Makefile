@@ -2,6 +2,8 @@ SHELL := bash
 
 ROOT := $(shell pwd)
 
+VERSION := 0.1.73
+
 BIN := $(ROOT)/bin
 SHELLCHECK := $(BIN)/shellcheck
 
@@ -21,7 +23,7 @@ SHELLCHECK_RELEASE := \
   $(SHELLCHECK_RELEASES)/$(SHELLCHECK_VERSION)/$(SHELLCHECK_TAR)
 
 DOCKER_USER := ingy
-DOCKER_VERSION := 0.0.1
+DOCKER_VERSION := $(VERSION)
 DOCKER_NAME := exercism-$(shell basename $(ROOT))
 DOCKER_IMAGE := $(DOCKER_USER)/$(DOCKER_NAME):$(DOCKER_VERSION)
 
@@ -62,7 +64,10 @@ $(SHELLCHECK_TAR):
 	curl -sSOL $(SHELLCHECK_RELEASE)
 
 docker-build:
-	docker build --tag=$(DOCKER_IMAGE) .
+	docker build \
+	  --build-arg=VERSION=$(DOCKER_VERSION) \
+	  --tag=$(DOCKER_IMAGE) \
+	  .
 
 docker-push: docker-build
 	docker push $(DOCKER_IMAGE)
