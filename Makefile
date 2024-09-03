@@ -63,8 +63,13 @@ $(SHELLCHECK_DIR): $(SHELLCHECK_TAR)
 $(SHELLCHECK_TAR):
 	curl -sSOL $(SHELLCHECK_RELEASE)
 
+ifneq (,$(EX_YS_DEV))
+DOCKER_DEVEL := -f dev/main.dockerfile
+endif
+
 docker-build:
 	docker build \
+	  $(DOCKER_DEVEL) \
 	  --build-arg=VERSION=$(DOCKER_VERSION) \
 	  --tag=$(DOCKER_IMAGE) \
 	  .
