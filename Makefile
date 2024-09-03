@@ -32,7 +32,12 @@ default:
 
 test: test-shellcheck
 
-update: $(EXPECTED_RESULTS_FILES)
+update: update-dockerfile update-expected
+
+update-dockerfile:
+	perl -pi -e 's/^(ARG VERSION) .*/$$1 $(VERSION)/' Dockerfile
+
+update-expected: $(EXPECTED_RESULTS_FILES)
 
 clean:
 	$(RM) -r shellcheck*
@@ -70,7 +75,6 @@ endif
 docker-build:
 	docker build \
 	  $(DOCKER_DEVEL) \
-	  --build-arg=VERSION=$(DOCKER_VERSION) \
 	  --tag=$(DOCKER_IMAGE) \
 	  .
 
