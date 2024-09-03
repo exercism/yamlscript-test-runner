@@ -2,7 +2,7 @@ SHELL := bash
 
 ROOT := $(shell pwd)
 
-VERSION := 0.1.73
+VERSION := 0.1.74
 
 BIN := $(ROOT)/bin
 SHELLCHECK := $(BIN)/shellcheck
