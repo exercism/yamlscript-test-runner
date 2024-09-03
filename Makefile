@@ -2,6 +2,8 @@ SHELL := bash
 
 ROOT := $(shell pwd)
 
+VERSION := 0.1.74
+
 BIN := $(ROOT)/bin
 SHELLCHECK := $(BIN)/shellcheck
 
@@ -21,7 +23,7 @@ SHELLCHECK_RELEASE := \
   $(SHELLCHECK_RELEASES)/$(SHELLCHECK_VERSION)/$(SHELLCHECK_TAR)
 
 DOCKER_USER := ingy
-DOCKER_VERSION := 0.0.1
+DOCKER_VERSION := $(VERSION)
 DOCKER_NAME := exercism-$(shell basename $(ROOT))
 DOCKER_IMAGE := $(DOCKER_USER)/$(DOCKER_NAME):$(DOCKER_VERSION)
 
@@ -30,7 +32,12 @@ default:
 
 test: test-shellcheck
 
-update: $(EXPECTED_RESULTS_FILES)
+update: update-dockerfile update-expected
+
+update-dockerfile:
+	perl -pi -e 's/^(ARG VERSION) .*/$$1 $(VERSION)/' Dockerfile
+
+update-expected: $(EXPECTED_RESULTS_FILES)
 
 clean:
 	$(RM) -r shellcheck*
@@ -61,8 +68,15 @@ $(SHELLCHECK_DIR): $(SHELLCHECK_TAR)
 $(SHELLCHECK_TAR):
 	curl -sSOL $(SHELLCHECK_RELEASE)
 
+ifneq (,$(EX_YS_DEV))
+DOCKER_DEVEL := -f dev/main.dockerfile
+endif
+
 docker-build:
-	docker build --tag=$(DOCKER_IMAGE) .
+	docker build \
+	  $(DOCKER_DEVEL) \
+	  --tag=$(DOCKER_IMAGE) \
+	  .
 
 docker-push: docker-build
 	docker push $(DOCKER_IMAGE)
