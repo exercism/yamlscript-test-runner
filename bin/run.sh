@@ -47,7 +47,7 @@ test_output=$(
 # Write the results.json file based on the exit code of the command that was
 # just executed that tested the implementation file:
 
-if [[ $test_output = *'All tests successful.' ]]; then
+if (echo "$test_output" | grep -e '^All tests successful.$'); then
     jq -n --arg output "$test_output" \
        '{version: 1, status: "pass", message: $output}' \
        > "$results_file"
