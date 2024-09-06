@@ -7,7 +7,7 @@
 
 FROM ubuntu:24.04
 
-ARG VERSION 0.1.74
+ARG VERSION 0.1.75
 
 # Install packages required to run the tests:
 RUN apt-get update \
