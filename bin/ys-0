@@ -4,6 +4,8 @@ set -euo pipefail
 
 die() { printf '%s\n' "$@"; exit 1; }
 
+YS_VERSION=${YS_VERSION:-0.1.75}
+
 [[ ${YS_VERSION-} ]] ||
   die "Exercism/YAMLScript internal error. YS_VERSION is not set"
 
