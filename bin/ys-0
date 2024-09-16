@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+die() { printf '%s\n' "$@"; exit 1; }
+
+[[ ${YS_VERSION-} ]] ||
+  die "Exercism/YAMLScript internal error. YS_VERSION is not set"
+
+[[ $YS_VERSION =~ ^0\.1\.[0-9]{2,3}$ ]] ||
+  die "Exercism/YAMLScript YS_VERSION='$YS_VERSION' is invalid"
+
+ys=ys-$YS_VERSION
+
+[[ $(command -v "$ys") ]] ||
+  die "Exercism/YAMLScript '$ys' command not found"
+
+exec "$ys" "$@"
