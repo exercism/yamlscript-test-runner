@@ -19,5 +19,6 @@ test:
 update: expected_results.json
 
 expected_results.json: *.ys Makefile
+	ys --version
 	$(GEN) $(BASE) > $@.out || true
 	mv $@.out $@
