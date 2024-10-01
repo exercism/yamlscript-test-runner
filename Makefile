@@ -2,7 +2,7 @@ SHELL := bash
 
 ROOT := $(shell pwd)
 
-VERSION := 0.1.76
+VERSION := 0.1.79
 
 BIN := $(ROOT)/bin
 SHELLCHECK := $(BIN)/shellcheck
@@ -32,10 +32,13 @@ default:
 
 test: test-shellcheck
 
-update: update-dockerfile update-expected
+update: check-dockerfile update-expected
 
-update-dockerfile:
-	perl -pi -e 's/0\.1\.\d{2,3}/$(VERSION)/' Dockerfile
+check-dockerfile: Dockerfile
+	@grep -q '=$(VERSION)' $< || { \
+	  echo "Error: Update the Dockerfile VERSION"; \
+	  exit 1; \
+	}
 
 update-expected: $(EXPECTED_RESULTS_FILES)
 
@@ -72,7 +75,7 @@ ifneq (,$(EX_YS_DEV))
 DOCKER_DEVEL := -f dev/main.dockerfile
 endif
 
-docker-build: update-dockerfile
+docker-build: check-dockerfile
 	docker build \
 	  $(DOCKER_DEVEL) \
 	  --tag=$(DOCKER_IMAGE) \

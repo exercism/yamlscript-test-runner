@@ -25,16 +25,19 @@ RUN curl -sSOL https://github.com/koalaman/shellcheck/releases/download/v0.10.0/
  && rm -fr shellcheck-* \
  && true
 
+ENV VERSION=0.1.79
+
 # Install /usr/local/bin/ys (the YAMLScript interpreter binary):
-RUN curl -s https://yamlscript.org/install | BIN=1 VERSION=0.1.76 bash \
+RUN curl -s https://yamlscript.org/install | BIN=1 bash \
  && rm -f \
         /usr/local/bin/ys \
         /usr/local/bin/ys-0 \
-        /usr/local/bin/ys-sh-0.1.76 \
+        /usr/local/bin/ys-sh-$VERSION \
  && true
 
 RUN true \
- && ln -s ys-0.1.76 /usr/local/bin/ys-0.1.75 \
+ && ln -s ys-$VERSION /usr/local/bin/ys-0.1.76 \
+ && ln -s ys-$VERSION /usr/local/bin/ys-0.1.75 \
  && true
 
 ENV PATH="/opt/test-runner/bin:$PATH"
