@@ -29,12 +29,12 @@ ENV VERSION=0.1.96
 
 # Install /usr/local/bin/ys (the YAMLScript interpreter binary):
 RUN curl -s https://yamlscript.org/install | BIN=1 VERSION=$VERSION bash \
+ && curl -s https://yamlscript.org/install | BIN=1 VERSION=0.1.81 bash \
  && curl -s https://yamlscript.org/install | BIN=1 VERSION=0.1.80 bash \
  && rm -f \
         /usr/local/bin/ys \
         /usr/local/bin/ys-0 \
-        /usr/local/bin/ys-sh-$VERSION \
-        /usr/local/bin/ys-sh-0.1.80 \
+        /usr/local/bin/ys-sh-* \
  && true
 
 RUN true \
