@@ -1,5 +1,5 @@
 {
   "version": 1,
   "status": "error",
-  "message": "Runtime error:\nWrong number of args (1) passed to: sci.impl.fns/fun/arity-0--4030\nleap-test.ys .. \nDubious, test returned 1 (wstat 256, 0x100)\nNo subtests run \nTest Summary Report\n-------------------\nleap-test.ys (Wstat: 256 (exited 1) Tests: 0 Failed: 0)\n  Non-zero exit status: 1"
+  "message": "Error:\nWrong number of args (1) passed to: sci.impl.fns/fun/arity-0--4030\nleap-test.ys .. \nDubious, test returned 1 (wstat 256, 0x100)\nNo subtests run \nTest Summary Report\n-------------------\nleap-test.ys (Wstat: 256 (exited 1) Tests: 0 Failed: 0)\n  Non-zero exit status: 1"
 }
