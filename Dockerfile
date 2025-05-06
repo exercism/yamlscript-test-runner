@@ -25,10 +25,11 @@ RUN curl -sSOL https://github.com/koalaman/shellcheck/releases/download/v0.10.0/
  && rm -fr shellcheck-* \
  && true
 
-ENV VERSION=0.1.96
+# This variable is needed by /opt/test-runner/bin/ys-0 in YS GHA testing
+ENV YS_VERSION=0.1.96
 
 # Install /usr/local/bin/ys (the YAMLScript interpreter binary):
-RUN curl -s https://yamlscript.org/install | BIN=1 VERSION=$VERSION bash \
+RUN curl -s https://yamlscript.org/install | BIN=1 VERSION=$YS_VERSION bash \
  && curl -s https://yamlscript.org/install | BIN=1 VERSION=0.1.81 bash \
  && curl -s https://yamlscript.org/install | BIN=1 VERSION=0.1.80 bash \
  && rm -f \
