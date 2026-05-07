@@ -9,14 +9,16 @@ FROM ubuntu:24.04
 
 # Install packages required to run the tests:
 RUN apt-get update \
- && apt-get install -y apt-utils \
- && apt-get install -y \
+ && apt-get install --yes --no-install-recommends \
+        ca-certificates \
         curl \
         jq \
         make \
         perl \
         xz-utils \
- && true
+ && apt-get purge --auto-remove -y \
+ && apt-get clean \
+ && rm -rf /var/lib/apt/lists/*
 
 # Install a specific version of shellcheck:
 RUN curl -sSOL https://github.com/koalaman/shellcheck/releases/download/v0.10.0/shellcheck-v0.10.0.linux.x86_64.tar.xz \
