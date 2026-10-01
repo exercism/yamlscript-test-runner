@@ -13,7 +13,6 @@ RUN apt-get update \
         git \
         jq \
         make \
-        perl \
         xz-utils \
  && apt-get purge --auto-remove -y \
  && apt-get clean \
