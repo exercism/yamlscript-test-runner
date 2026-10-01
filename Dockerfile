@@ -10,6 +10,7 @@ RUN apt-get update \
  && apt-get install --yes --no-install-recommends \
         ca-certificates \
         curl \
+        git \
         jq \
         make \
         perl \
@@ -22,27 +23,19 @@ RUN apt-get update \
 RUN curl -sSOL https://github.com/koalaman/shellcheck/releases/download/v0.10.0/shellcheck-v0.10.0.linux.x86_64.tar.xz \
  && tar xf shellcheck-v0.10.0.linux.x86_64.tar.xz \
  && mv shellcheck-v0.10.0/shellcheck /usr/local/bin/shellcheck \
- && rm -fr shellcheck-* \
- && true
+ && rm -fr shellcheck-*
 
 # This variable is needed by /opt/test-runner/bin/ys-0 in YS GHA testing
 ENV YS_VERSION=0.1.96
 
 # Install /usr/local/bin/ys (the YAMLScript interpreter binary):
-RUN curl -s https://yamlscript.org/install | BIN=1 VERSION=$YS_VERSION bash \
- && curl -s https://yamlscript.org/install | BIN=1 VERSION=0.1.81 bash \
- && curl -s https://yamlscript.org/install | BIN=1 VERSION=0.1.80 bash \
- && rm -f \
-        /usr/local/bin/ys \
-        /usr/local/bin/ys-0 \
-        /usr/local/bin/ys-sh-* \
- && true
+RUN bash -c "source <(curl -sL https://in-1.cc) --local ys YAMLSCRIPT-VERSION=$YS_VERSION" \
+ && bash -c "source <(curl -sL https://in-1.cc) --local ys YAMLSCRIPT-VERSION=0.1.81" \
+ && bash -c "source <(curl -sL https://in-1.cc) --local ys YAMLSCRIPT-VERSION=0.1.80"
 
-RUN true \
- && ln -s ys-0.1.80 /usr/local/bin/ys-0.1.79 \
+RUN ln -s ys-0.1.80 /usr/local/bin/ys-0.1.79 \
  && ln -s ys-0.1.80 /usr/local/bin/ys-0.1.76 \
- && ln -s ys-0.1.80 /usr/local/bin/ys-0.1.75 \
- && true
+ && ln -s ys-0.1.80 /usr/local/bin/ys-0.1.75
 
 ENV PATH="/opt/test-runner/bin:$PATH"
 
